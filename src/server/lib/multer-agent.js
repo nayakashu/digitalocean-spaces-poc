@@ -10,7 +10,17 @@ import configureDotEnv from './dotenv-loader';
 
 configureDotEnv();
 
-const { SPACES_ENDPOINT, SPACES_BUCKET } = process.env;
+const {
+  AWS_ACCESS_KEY_ID: accessKeyId,
+  AWS_SECRET_KEY: secretAccessKey,
+  SPACES_ENDPOINT,
+  SPACES_BUCKET: bucket,
+} = process.env;
+
+aws.config.update({
+  accessKeyId,
+  secretAccessKey,
+});
 
 const endpoint = new aws.Endpoint(SPACES_ENDPOINT);
 
@@ -19,7 +29,7 @@ const s3 = new aws.S3({ endpoint });
 const upload = multer({
   storage: multerS3({
     s3,
-    bucket: SPACES_BUCKET,
+    bucket,
     acl: PUBLIC_READ,
     key: (req, file, cb) => {
       console.log(file);

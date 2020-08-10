@@ -3,7 +3,7 @@ import path from 'path';
 
 const router = express.Router();
 
-const pathConfig = { root: path.join(__dirname, '../public') };
+const pathConfig = { root: path.join(__dirname, '../../public') };
 
 router.get('/', (req, res) => {
   res.sendFile('index.html', pathConfig);
